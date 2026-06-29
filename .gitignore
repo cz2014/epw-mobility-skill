@@ -1,0 +1,6 @@
+# Python bytecode from parsers/
+__pycache__/
+*.py[cod]
+
+# OS junk
+.DS_Store
