@@ -107,10 +107,10 @@ Three axes to sweep, in order of impact:
 
 1. **`nkf1 = nkf2` (with `nqf = nkf`).** Dominates. Walk 40 → 60 → 80 →
    100 → 120 and stop when successive doublings shift μ by < 2 %.
-2. **`fsthick`.** Only matters with adaptive smearing. Values of
-   0.3, 0.5, 1.0, 2.0, 3.0 eV all give the same μ within 3 %; 4.0 eV
-   is safe. If you switch to fixed `degaussw`, tighten `fsthick` to
-   ~0.3 eV.
+2. **`fsthick`.** Sets the energy window around the Fermi level that selects
+   states for the transport sum; it just needs to be wide enough to cover the
+   carrier states at the band edge / Fermi level. Once it does, μ is converged
+   — 0.3, 0.5, 1.0, 2.0, 3.0 eV all give the same μ within 3 %; 4.0 eV is safe.
 3. **`degaussw`.** Only in the fixed-smearing branch. Values 0.005,
    0.010, 0.025 eV; 0.010 is the typical choice.
 
@@ -130,9 +130,9 @@ Run each variant as its own directory and diff the `*_elcond_e` tail.
 
 ## Troubleshooting
 
-**Unphysically low μ (≲ 50 cm²/V/s for ZrS₂).** Either `fsthick` is too
-small (adaptive-smearing window starves of states) or `nkf/nqf` is under-
-converged. Walk the convergence table above before touching anything else.
+**Unphysical μ (too large or too small).** Either `fsthick` is too small or
+`nkf/nqf` is under-converged. Walk the convergence table above before
+touching anything else.
 
 **μ depends strongly on `fermi_energy`.** Symptom of incorrect doping
 setup. Cross-check: at the stated `ncarrier`, E_F − E_CBM ≈ k_B T × ln(n/N_c)
@@ -144,4 +144,4 @@ N must equal the rank count.
 
 **Checkpoint file grows beyond disk quota.** `etf_mem = 3` writes the
 interpolated |g| to scratch. For a 100² × 100² grid this can exceed
-100 GB; run on scratch filesystems, not home.
+100 GB.

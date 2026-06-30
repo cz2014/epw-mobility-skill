@@ -2,8 +2,8 @@
 
 Build maximally-localized Wannier functions (MLWFs) for the band manifold
 used in EPW interpolation. This step is the single strongest predictor of
-downstream quality: the Hamiltonian, dynamical matrix, and electron-
-phonon vertex are all interpolated from this Wannier representation.
+downstream quality: the Hamiltonian and electron-phonon vertex are
+interpolated from this Wannier representation.
 
 For 2D systems in a long-vacuum cell, spread minimisation is fragile —
 WF centres can fold to the wrong z-image. The key fix is

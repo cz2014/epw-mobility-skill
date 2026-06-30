@@ -81,8 +81,8 @@ NSCF tmp into its own directory** so the SCF state survives for DFPT).
   desynchronises the k-indexing.
 - `nbnd` must cover the EPW disentanglement window. `nbnd = 30` for ZrS2
   monolayer gives 6 occupied + 24 empty — enough headroom.
-- `diago_full_acc = .true.` — empty bands get the same tolerance as
-  occupied.
+- `diago_full_acc = .true.` — optional; gives empty bands the same tolerance
+  as the occupied ones.
 - Leave `nosym` and `noinv` at their defaults (`.false.`). Setting them
   does not fix any known EPW bug and is not part of the validated input.
 

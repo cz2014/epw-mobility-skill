@@ -9,6 +9,10 @@ SCF → NSCF → DFPT → Wannier → EPW pipeline. The skill is the
 [`epw-mobility/`](epw-mobility/) directory; [`SKILL.md`](epw-mobility/SKILL.md)
 is the entry point.
 
+The step files are worked end-to-end on a 2D ZrS₂ monolayer as the benchmark
+and troubleshooting reference — point your agent at your own material and have
+it adapt this example rather than copy it.
+
 ## Workflow
 
 ![epw-mobility workflow](pipeline.png)
