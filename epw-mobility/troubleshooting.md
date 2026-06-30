@@ -28,9 +28,10 @@ specifically caused by this pipeline, not generic QE/EPW advice.
 
 ## Rules of thumb
 
-**Drop to `-np 32` to expose swallowed errors.** Some DFPT and EPW error
-paths abort via MPI without printing the underlying Fortran error. Re-run
-the same input at `-np 32` and the cause usually surfaces.
+**Drop to a lower MPI rank count to expose swallowed errors.** Some DFPT and EPW
+error paths abort via MPI without printing the underlying Fortran error. Re-run
+the same input at a smaller `-np` (`-np 32` on the validated machine) and the
+cause usually surfaces.
 
 **Gauge rotations in degenerate phonon subspaces.** For ZrS₂ 1T the LO and
 upper TO at small q are within ~0.1 meV; rank assignments swap between

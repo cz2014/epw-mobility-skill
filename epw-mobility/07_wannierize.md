@@ -54,8 +54,10 @@ WF centres can fold to the wrong z-image. The key fix is
 /
 ```
 
-`proj(...)` are the projection hints. EPW then writes a `zrs2.win` that
-includes `guiding_centres=.true.`, etc.
+`proj(...)` are the projection hints. The projections, `nbndsub`, and
+`exclude_bands` are material-specific — they must span your target band manifold
+(here the ZrS2 1T Zr-d / S-p states); set them for your material. EPW then writes
+a `zrs2.win` that includes `guiding_centres=.true.`, etc.
 
 ## Run
 

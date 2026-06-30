@@ -62,8 +62,8 @@ itself cannot drive q2r.
 mpirun -np 32 ph.x -in ph_gamma.in > ph_gamma.out
 ```
 
-(ph.x runs at `-np 32` on Anvil; `-np 128` can hit the same MPI-swallow-
-error pattern as NSCF/DFPT.)
+(the safe rank count is machine-dependent; on the validated build `ph.x` ran at
+`-np 32`, while `-np 128` hit the same MPI-swallow-error pattern as NSCF/DFPT.)
 
 ## Expected output (ZrS2 monolayer, 32 ranks)
 

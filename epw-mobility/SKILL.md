@@ -90,11 +90,13 @@ walltime, and step-specific troubleshooting.
 
 ## Conventions
 
-- `ibrav = 4` for hexagonal 2D; `assume_isolated = '2D'` in pw.x **and** ph.x.
-  The 2D Coulomb truncation is required for the EPW long-range kernel.
-- MPI layout: DFT/DFPT `-np 32` (DFPT aborts silently at higher rank count in
-  some configurations — 32 is the safe default). EPW `-np 32 -npool 32`
-  (`-npool N` with N = np is mandatory).
+- Set `ibrav` to match your Bravais lattice (`ibrav = 4` is the hexagonal case),
+  not `ibrav = 0` — `ph.x` symmetry detection is more reliable with a built-in
+  lattice. `assume_isolated = '2D'` in pw.x **and** ph.x; the 2D Coulomb
+  truncation is required for the EPW long-range kernel.
+- MPI layout: the safe rank count is machine-dependent — on the validated build,
+  DFT/DFPT ran at `-np 32` (higher counts aborted DFPT silently). EPW used
+  `-np 32 -npool 32`; `-npool N` with N = np is mandatory (not machine-specific).
 - `electron_phonon = 'prt'` in ph.x for QE 7.4.1 (legacy `'simple'` is gone).
 - Hexagonal q conversion: crystal (δ, 0, 0) → Cartesian 2π/a (δ, δ/√3, 0).
   Sign matters: read ph.x's own printed k-list back to confirm.
