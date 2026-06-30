@@ -9,7 +9,9 @@ SCF → NSCF → DFPT → Wannier → EPW pipeline. The skill is the
 [`epw-mobility/`](epw-mobility/) directory; [`SKILL.md`](epw-mobility/SKILL.md)
 is the entry point.
 
-![epw-mobility pipeline](assets/pipeline.png)
+## Workflow
+
+![epw-mobility workflow](assets/pipeline.png)
 
 ## What it can do
 
