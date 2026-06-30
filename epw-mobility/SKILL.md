@@ -16,21 +16,22 @@ on ZrS₂ monolayer (1T phase) with the QE 7.4.1 / EPW 5.8.1 build.
 ## Pipeline
 
 ```
-  01 SCF ──→ 02 NSCF (explicit k)
-     │           │
-     │           ├──────────────────┐
-     │           ↓                  ↓
-     │      03 DFPT-Γ         07 Wannierize ←─┐
-     │       (ε∞, Z*)               │         │
-     │           │                  ├──→ 08 EPW prtgkk
-     │           ↓                  │         (|g| at chosen k, q)
-     │      04 DFPT uniform-q       │
-     │           │                  └──→ 09 EPW SERTA mobility
-     │           ↓                        (μ(T))
-     │      06 pp.py gather
-     │
-     └──→ 05 DFPT single-q   ← benchmark branch: exact |g| at one finite q
-          (reference for 08)
+                       01 SCF
+           ┌─────────────┼──────────────┐
+           ↓             ↓              ↓
+      03 DFPT-Γ     04 DFPT         02 NSCF
+      (ε∞, Z*)      uniform-q       (explicit k)
+      standalone        │               │
+                        ↓               │
+                   06 pp.py gather       │
+                      │    │            │
+                      │    └──────┐     │
+                      │           ↓     ↓
+                      │         07 Wannierize
+                      │           │     │
+                      ↓           ↓     ↓
+                 09 EPW SERTA ←───┘   08 EPW prtgkk ←┈┈ 05 DFPT single-q
+                 mobility μ(T)        mode-resolved |g|   (benchmark ref)
 ```
 
 ## Decision table
@@ -38,10 +39,13 @@ on ZrS₂ monolayer (1T phase) with the QE 7.4.1 / EPW 5.8.1 build.
 | Goal | Run steps |
 |------|-----------|
 | ε∞ and Born charges only | 01 → 03 |
-| Reference \|g\| at one (k, q) — fastest accuracy benchmark | 01 → 03 → 05 |
-| Wannier + EPW interpolation of \|g(k, q, ν)\| on a dense path | 01 → 02 → 03 → 04 → 06 → 07 → 08 |
-| SERTA carrier mobility μ(T) | 01 → 02 → 03 → 04 → 06 → 07 → 09 |
-| Benchmark EPW interpolation against DFPT ground truth | 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 (compare 05 vs 08) |
+| Reference \|g\| at one (k, q) — fastest accuracy benchmark | 01 → 02 → 05 |
+| Wannier + EPW interpolation of \|g(k, q, ν)\| on a dense path | 01 → 02 → 04 → 06 → 07 → 08 |
+| SERTA carrier mobility μ(T) | 01 → 02 → 04 → 06 → 07 → 09 |
+| Benchmark EPW interpolation against DFPT ground truth | 01 → 02 → 04 → 05 → 06 → 07 → 08 (compare 05 vs 08) |
+
+`03` (Γ ε∞/Z*) is an optional standalone check — EPW reads ε∞/Z* from step
+`04`'s Γ irrep, so it is not required by the EPW paths above.
 
 ## File handoff
 
@@ -49,10 +53,10 @@ on ZrS₂ monolayer (1T phase) with the QE 7.4.1 / EPW 5.8.1 build.
 |---|---|---|
 | 01 SCF | `tmp/<prefix>.{save,wfc*,charge-density.dat}` | 02, 03, 04 |
 | 02 NSCF | uniform-grid Bloch orbitals in `tmp/<prefix>.save` | 07, 08, 09 |
-| 03 DFPT-Γ | `dyn0`, `dyn1` (ε∞ + Z*), `_ph0/<prefix>.phsave/` | 04 (recover), 06, q2r |
+| 03 DFPT-Γ | `dyn0`, `dyn1` (ε∞ + Z*), `_ph0/<prefix>.phsave/` | — standalone (ε∞/Z* check) |
 | 04 DFPT uniform-q | `dyn1..dynN` (irreducible q), `dvscf_q*` | 06 |
 | 05 DFPT single-q | `ph_qX.out` with `Electron-phonon vertex \|g\| (meV)` block | 08 (comparison only) |
-| 06 pp.py | `save/<prefix>.dvscf_qX`, `save/<prefix>.dyn_qX` | 07 |
+| 06 pp.py | `save/<prefix>.dvscf_qX`, `save/<prefix>.dyn_qX` | 07, 08, 09 |
 | 07 Wannierize | `<prefix>.chk`, `<prefix>_hr.dat`, `<prefix>.wout`, `epwdata.fmt` | 08, 09 |
 | 08 EPW prtgkk | `epw.out` with `prtgkk` blocks | analysis |
 | 09 EPW mobility | `<prefix>_elcond_e`, `scattering_rate_<T>` | analysis |
