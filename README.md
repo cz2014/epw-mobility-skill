@@ -11,7 +11,7 @@ is the entry point.
 
 ## Workflow
 
-![epw-mobility workflow](assets/pipeline.png)
+![epw-mobility workflow](pipeline.png)
 
 ## What it can do
 
