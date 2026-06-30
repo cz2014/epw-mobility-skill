@@ -1,8 +1,8 @@
 # 03 — Γ-point DFPT: ε∞ and Born charges
 
 Compute the high-frequency dielectric tensor ε∞ and Born effective charges
-Z*. Required by EPW's 2D long-range Frohlich correction. Without them,
-polar-mode |g| near the zone centre is wrong by orders of magnitude.
+Z*. EPW's 2D long-range Frohlich correction needs these (it reads them from
+step 04's Γ); this step computes them standalone as a fast check.
 
 Also a useful SCF sanity check: if ε∞ comes out non-symmetric or
 negative-definite, something upstream is wrong.
