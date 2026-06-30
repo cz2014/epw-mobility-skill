@@ -13,17 +13,15 @@ is the entry point.
 
 ## What it can do
 
-- Guards to let the agent do the Wannier interpolation correctly.
+- Guards that let the agent iteratively tune the Wannier interpolation.
+- Special 2D-material notes for the PW and EPW settings.
 - Produces carrier mobility end-to-end, plus the mode-resolved EPC |g|.
-- Human-curated troubleshooting covering the common mistakes an agent might make.
+- Includes human-curated troubleshooting covering the common mistakes an agent might make.
 - Extracts the |g| reference directly from DFPT (`ph.x`).
 
 ## Requirements
 
-- Quantum ESPRESSO 7.4.1 with EPW and Wannier90 (the pipeline relies on
-  `assume_isolated='2D'` in `pw.x` **and** `ph.x`, plus EPW's 2D long-range
-  kernel).
-- ONCV SG15 PBE pseudopotentials (or your own, re-validated).
+- Quantum ESPRESSO 7.4.1 with EPW and Wannier90.
 - Python 3.9+ for `parsers/*.py` and EPW's `pp.py`.
 - An MPI build (the step files assume `mpirun`).
 
