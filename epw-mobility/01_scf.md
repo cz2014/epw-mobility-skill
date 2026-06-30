@@ -65,10 +65,14 @@ Produces `tmp/zrs2.save/` and `tmp/zrs2.wfc*.dat`, consumed by steps 02–05.
 
 ## Notes
 
-- `ibrav = 4` (not `ibrav = 0`): plays well with `ph.x` symmetry detection.
-- `celldm(3) ≥ 8` gives adequate vacuum for a 3 Å slab.
-- `ecutwfc = 60 Ry` is sufficient for EPC; tighter total-energy convergence
-  (80 Ry) is not needed for matrix-element convergence.
+- Set `ibrav` to match your Bravais lattice (`ibrav = 4` is the hexagonal case),
+  not `ibrav = 0` — `ph.x` symmetry detection is more reliable with a built-in
+  lattice.
+- Vacuum must be large enough that periodic slab images don't interact — scale
+  `celldm(3)` to your slab thickness; `≥ 8` gives ~30 Å for a ~3 Å slab.
+- `ecutwfc` is material-specific — converge it for your material. For ZrS2,
+  60 Ry is sufficient for EPC; tighter total-energy convergence (80 Ry) is not
+  needed for matrix-element convergence.
 - `occupations = 'fixed'` for semiconductors — no `degauss`.
 - `conv_thr = 1e-10` is required for downstream DFPT convergence.
 
