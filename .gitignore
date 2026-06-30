@@ -4,3 +4,8 @@ __pycache__/
 
 # OS junk
 .DS_Store
+
+# Editor swap files
+*.swp
+*.swo
+*~
